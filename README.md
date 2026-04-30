@@ -1,49 +1,65 @@
 # 🚌 Bus Routing & Student Drop-off System
 
-Optimized bus routing using **Greedy** and **Dynamic Programming** algorithms.
+A professional web mapping tool for optimized bus routing using **Greedy** and **Dynamic Programming (Held-Karp)** algorithms. This application features a fully interactive map, geospatial address searching, and real-world geodesic distance calculations.
+
+---
+
+## 🚀 Features
+
+- **Interactive Map Interface**: Built with Leaflet.js for a professional geospatial experience.
+- **Location Searching**: Integrated Geocoder for easy address lookup and marker placement.
+- **Toggleable Base Layers**: Switch seamlessly between standard Street Map and Satellite views.
+- **Geodesic Distances**: Employs the Haversine formula to calculate accurate, real-world kilometer distances accounting for Earth's curvature.
+- **Undo Functionality**: Easy route stop management with an intuitive undo feature.
+- **Algorithm Comparison**: Side-by-side performance metrics comparing the Greedy heuristic vs. optimal Dynamic Programming.
+- **Depot Selection**: Choose any added stop to serve as the starting bus depot.
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 bus_routing/
-├── app.py                    # Flask web server
-├── demo.py                   # CLI algorithm demo
-├── requirements.txt
+├── app.py                    # Flask web server backend
+├── demo.py                   # CLI algorithm demonstration
+├── requirements.txt          # Python dependencies
 ├── algorithms/
 │   ├── __init__.py
-│   └── routing.py            # Greedy & DP (Held-Karp) algorithms
+│   └── routing.py            # Greedy & DP (Held-Karp) algorithms with Haversine logic
 ├── static/
-│   ├── css/style.css
-│   └── js/app.js             # Interactive map UI
+│   ├── css/style.css         # UI styling
+│   └── js/app.js             # Leaflet.js interactive map and frontend logic
 ├── templates/
-│   └── index.html
+│   └── index.html            # Main web interface
 └── tests/
-    └── test_routing.py       # Unit tests
+    └── test_routing.py       # Unit test suite
 ```
 
 ---
 
-## 🚀 How to Run
+## 🛠️ How to Run
 
-### 1. Install dependencies
+### 1. Install Dependencies
+Make sure you have Python installed, then run:
 ```bash
-pip install flask
+pip install -r requirements.txt
 ```
+*(If you do not have a requirements file, `pip install flask` is sufficient).*
 
-### 2. Run the web app
+### 2. Start the Web Application
 ```bash
 python app.py
 ```
-Open **http://localhost:5000** in your browser.
+Open **http://localhost:5000** in your web browser.
 
-### 3. Run the CLI demo
+### 3. Run the CLI Demo (Optional)
+To test the routing algorithms purely in the terminal:
 ```bash
 python demo.py
 ```
 
-### 4. Run unit tests
+### 4. Run Unit Tests
+To validate the routing algorithms and Haversine calculations:
 ```bash
 python tests/test_routing.py
 ```
@@ -55,46 +71,21 @@ python tests/test_routing.py
 ### Greedy — Nearest Neighbour
 - **Idea**: At each step, visit the closest unvisited stop.
 - **Time Complexity**: O(n²)
-- **Pros**: Very fast, easy to implement.
-- **Cons**: Not always optimal — can be 20–25% worse.
+- **Space Complexity**: O(n)
+- **Pros**: Lightning fast, easily handles hundreds of stops.
+- **Cons**: Not always optimal — can result in routes that are 20–25% longer than necessary.
 
 ### Dynamic Programming — Held-Karp (Optimal TSP)
-- **Idea**: Use bitmask DP to evaluate all subsets of stops and find the globally optimal route.
+- **Idea**: Uses bitmask DP to evaluate all possible route permutations and find the globally optimal sequence.
 - **Time Complexity**: O(n² · 2ⁿ)
-- **Pros**: Guaranteed optimal route.
-- **Cons**: Exponential space/time — limited to ~20 stops.
-
-### Key Formula (Held-Karp)
-```
-dp[S][i] = min cost to reach node i having visited exactly the nodes in bitmask S
-dp[S | (1<<v)][v] = min(dp[S][u] + dist[u][v])  for all u in S
-```
-
----
-
-## 🖥 Web Interface Features
-
-| Feature | Description |
-|---------|-------------|
-| **Click to add stops** | Click anywhere on the canvas |
-| **Presets** | Load 6, 10, or 15 stop configurations |
-| **Run Greedy** | Visualise nearest-neighbour route (yellow) |
-| **Run DP** | Visualise optimal Held-Karp route (green) |
-| **Compare Both** | Side-by-side metrics + improvement % |
-| **Depot selection** | Choose any stop as the starting bus depot |
-
----
-
-## 📊 Complexity Comparison
-
-| Algorithm | Time | Space | Optimality |
-|-----------|------|-------|------------|
-| Greedy    | O(n²) | O(n) | Near-optimal |
-| DP (Held-Karp) | O(n²·2ⁿ) | O(n·2ⁿ) | **Optimal** |
+- **Space Complexity**: O(n · 2ⁿ)
+- **Pros**: Mathematically guaranteed to find the absolute shortest route.
+- **Cons**: Exponential space/time complexity — safely limited to ~20 stops before performance degrades.
 
 ---
 
 ## 📌 Notes
-- DP is limited to **≤ 20 stops** due to exponential complexity.
-- Coordinates are normalised to a 0–100 grid (percentage of canvas size).
-- Distances are Euclidean (straight-line).
+
+- Coordinates are processed as real Latitude/Longitude pairs.
+- Distances are displayed in kilometers (km).
+- DP calculation is hard-capped at 20 stops to prevent server timeouts and extreme memory usage.
