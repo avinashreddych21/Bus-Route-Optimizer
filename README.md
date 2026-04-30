@@ -1,4 +1,4 @@
-# 🚌 Bus Routing & Student Drop-off System
+# 🚌 Bus Route Optimizer
 
 A professional web mapping tool for optimized bus routing using **Greedy** and **Dynamic Programming (Held-Karp)** algorithms. This application features a fully interactive map, geospatial address searching, and real-world geodesic distance calculations.
 
