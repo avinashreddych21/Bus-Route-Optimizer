@@ -92,7 +92,6 @@ python tests/test_routing.py
 
 ---
 
-## 📺 Demo Video
+## 📄 Project Report
 
-[Watch the Demo Video](https://drive.google.com/file/d/1Jv1KvD1Hh57ltWluRC5B21_J0ApHT2G_/view?usp=drivesdk)
-
+[View the Project Report PDF](https://drive.google.com/file/d/1Jv1KvD1Hh57ltWluRC5B21_J0ApHT2G_/view?usp=drivesdk)
