@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bus Routing Optimizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+
+<header>
+  <div class="logo">🚌 RouteOptimizer</div>
+  <nav>
+    <span class="badge greedy-badge">Greedy O(n²)</span>
+    <span class="badge dp-badge">DP O(n²·2ⁿ)</span>
+  </nav>
+</header>
+
+<main>
+  <!-- LEFT PANEL -->
+  <aside class="panel left-panel">
+    <h2>Student Stops</h2>
+    <p class="hint">Click the map to add stops, or use presets below.</p>
+
+    <div class="preset-row">
+      <button class="btn-outline" onclick="loadPreset(6)">6 Stops</button>
+      <button class="btn-outline" onclick="loadPreset(10)">10 Stops</button>
+      <button class="btn-outline" onclick="loadPreset(15)">15 Stops</button>
+      <button class="btn-outline danger" onclick="undoLastStop()">Undo</button>
+      <button class="btn-outline danger" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div id="stop-list" class="stop-list"></div>
+
+    <div class="depot-row">
+      <label for="depot-input">Depot (start) stop index:</label>
+      <input id="depot-input" type="number" value="0" min="0" title="Depot Stop Index" placeholder="0" aria-label="Depot Stop Index"/>
+    </div>
+
+    <div class="algo-buttons">
+      <button class="btn greedy-btn" onclick="runAlgorithm('greedy')">▶ Run Greedy</button>
+      <button class="btn dp-btn" onclick="runAlgorithm('dp')">▶ Run DP (Held-Karp)</button>
+      <button class="btn compare-btn" onclick="runAlgorithm('compare')">⇌ Compare Both</button>
+    </div>
+
+    <div id="results-panel" class="results-panel hidden"></div>
+  </aside>
+
+  <!-- CANVAS -->
+  <section class="canvas-section">
+    <div id="map-canvas"></div>
+    <div class="canvas-hint">Click map to add stops &nbsp;|&nbsp; First stop = Depot (🏠)</div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
